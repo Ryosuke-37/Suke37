@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brandeis Course Chatbot</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eaf2ff, #f8fbff);
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .chatbot-shell {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: #003366;
+      color: white;
+      padding: 20px;
+    }
+
+    .chat-header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .chat-header p {
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+      opacity: 0.92;
+    }
+
+    .chat-window {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .message {
+      max-width: 78%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      line-height: 1.5;
+      font-size: 0.98rem;
+      white-space: pre-wrap;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: #e6eef9;
+      color: #111827;
+      border-bottom-left-radius: 6px;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: #d9fbe8;
+      color: #111827;
+      border-bottom-right-radius: 6px;
+    }
+
+    .chat-input-area {
+      border-top: 1px solid #e5e7eb;
+      background: white;
+      padding: 16px;
+    }
+
+    .chat-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-form input {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .chat-form input:focus {
+      border-color: #003366;
+    }
+
+    .chat-form button {
+      border: none;
+      background: #003366;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chat-form button:hover {
+      background: #00264d;
+    }
+
+    .helper-text {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0;
+      }
+
+      .chatbot-shell {
+        border-radius: 0;
+      }
+
+      .message {
+        max-width: 88%;
+      }
+
+      .chat-form {
+        flex-direction: column;
+      }
+
+      .chat-form button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="chatbot-shell">
+      <div class="chat-header">
+        <h1>Brandeis Course Chatbot</h1>
+        <p>Chat about your major, interests, and preferences to explore possible classes.</p>
+      </div>
+
+      <div class="chat-window" id="chatWindow">
+        <div class="message bot">
+          Hi! I’m here to help you explore possible Brandeis classes.
+
+          To get started, tell me:
+          - your intended major
+          - subjects you enjoy
+          - any class preferences like workload, schedule, or class size
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <form class="chat-form" onsubmit="sendMessage(event)">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Type your message here..."
+            autocomplete="off"
+          />
+          <button type="submit">Send</button>
+        </form>
+        <div class="helper-text">
+          Front-end chatbot interface for GitHub Pages. Connect this to your backend or Playlab-powered endpoint for live AI responses.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addMessage(text, sender) {
+      const chatWindow = document.getElementById("chatWindow");
+      const message = document.createElement("div");
+      message.className = `message ${sender}`;
+      message.textContent = text;
+      chatWindow.appendChild(message);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function sendMessage(event) {
+      event.preventDefault();
+
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+
+      if (!text) return;
+
+      addMessage(text, "user");
+
+      setTimeout(() => {
+        addMessage(
+          "Thanks for sharing. This demo interface is ready for GitHub Pages. Once you connect it to an AI backend, your live chatbot response will appear here.",
+          "bot"
+        );
+      }, 500);
+
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
